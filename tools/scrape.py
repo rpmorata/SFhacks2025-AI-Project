@@ -71,7 +71,7 @@ def download_roboflow_images(url):
     """Main function to download images from Roboflow dataset using Selenium."""
     # Extract dataset name and create folder
     dataset_name = extract_dataset_name(url)
-    folder_path = create_folder(dataset_name)
+    folder_path = create_folder("../dataset/" + dataset_name)
     print(f"Created folder: {folder_path}")
     
     try:

@@ -1,1 +1,5 @@
-*.jpg
+datasets/*
+!datasets/null
+database.db
+*.pth
+__pycache__
