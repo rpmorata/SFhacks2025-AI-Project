@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 const fileInput = ref(null)
 const imageUrl = ref(null)
+const isModalOpen = ref(false) // State to control modal visibility
 
 function handleFileChange(event) {
   const file = event.target.files[0]
@@ -18,6 +19,14 @@ function handleFileChange(event) {
 
 function triggerFileInput() {
   fileInput.value.click() // Programmatically trigger the file input
+}
+
+function openModal() {
+  isModalOpen.value = true // Open the modal
+}
+
+function closeModal() {
+  isModalOpen.value = false // Close the modal
 }
 </script>
 
@@ -45,9 +54,24 @@ function triggerFileInput() {
         <p>Upload an Image</p>
       </template>
     </div>
-    <button @click="() => { console.log('Clicked!') }"
-      style="margin-top: 20px;">
+    <button @click="openModal" style="margin-top: 20px;">
       Clasify
     </button>
+
+    <!-- Modal -->
+    <div
+      v-if="isModalOpen"
+      style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center;"
+    >
+      <div
+        style="background: white; padding: 20px; border-radius: 8px; width: 400px; text-align: center;"
+      >
+        <h2>Modal Title</h2>
+        <p>Modal content goes here.</p>
+        <button @click="closeModal" style="margin-top: 20px;">
+          Close
+        </button>
+      </div>
+    </div>
   </div>
 </template>
