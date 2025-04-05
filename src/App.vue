@@ -1,13 +1,16 @@
-<script setup>
-import Burn from './components/Burn.vue'
-</script>
+
 
 <template>
-  <header class="header">
-    <img src="/topaical.svg" alt="Logo" class="logo" />
-    <h1>TopAIcal</h1>
-  </header>
-  <Burn />
+  <router-link to="/">
+    <header class="header">
+      <img src="/topaical.svg" alt="Logo" class="logo" />
+      <h1>TopAIcal</h1>
+    </header>
+  </router-link>
+
+
+  <router-view />
+
 </template>
 <style scoped>
 .header {
@@ -31,5 +34,6 @@ import Burn from './components/Burn.vue'
 
 h1 {
   margin: 10px; /* Reduce margin */
+  color: black; /* Set text color to black */
 }
 </style>
