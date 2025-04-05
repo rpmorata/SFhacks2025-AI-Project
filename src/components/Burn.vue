@@ -45,7 +45,8 @@ function triggerFileInput() {
         <p>Upload an Image</p>
       </template>
     </div>
-    <button @click="() => { console.log('Clicked!') }">
+    <button @click="() => { console.log('Clicked!') }"
+      style="margin-top: 20px;">
       Clasify
     </button>
   </div>
