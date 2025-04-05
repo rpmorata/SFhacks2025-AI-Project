@@ -4,7 +4,7 @@ import Burn from './components/Burn.vue'
 
 <template>
   <header>
-    <h1>Burning App</h1>
+    <h1>TopAIcal</h1>
   </header>
   <Burn  />
 </template>
