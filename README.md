@@ -29,6 +29,7 @@ python train.py
 
 ### Inference the model with your own image
 ```
-python src/inference.py --image "myImage.jpg"
+cd ..
+python inference.py --image "myImage.jpg"
 ```
 
