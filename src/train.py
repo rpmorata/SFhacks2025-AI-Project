@@ -60,7 +60,7 @@ class SkinDataset(Dataset):
 def load_data_from_db():
     # Connect to database
     conn = sqlite3.connect('../database.db')
-    cursor = conn.execute("SELECT image_data, classification FROM skinType")
+    cursor = conn.execute("SELECT image_data, classification FROM whiteOrNot")
     rows = cursor.fetchall()
     conn.close()
 
@@ -68,8 +68,7 @@ def load_data_from_db():
     images = []
     labels = []
     class_to_idx = {
-        'Normal': 0, 'Skin Disease': 1, 'Bruses': 2,
-        'Acne': 3, 'Monkey Pox': 4, 'Burns': 5
+        'White': 0, 'Not White': 1
     }
 
     for image_data, classification in rows:

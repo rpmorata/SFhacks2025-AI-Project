@@ -67,11 +67,24 @@ def download_image(url, folder_path):
         print(f"Error downloading {url}: {str(e)}")
     return False
 
-def download_roboflow_images(url):
+def download_roboflow_images(url, custom_folder_name=None):
     """Main function to download images from Roboflow dataset using Selenium."""
     # Extract dataset name and create folder
     dataset_name = extract_dataset_name(url)
-    folder_path = create_folder("../dataset/" + dataset_name)
+    
+    # Add category information to folder name if present in URL
+    parsed_url = urlparse(url)
+    query_params = parse_qs(parsed_url.query)
+    
+    if 'queryText' in query_params and query_params['queryText']:
+        category = query_params['queryText'][0]
+        # Clean up category name for folder name
+        category = category.replace('class:', '').replace('%3A', ':')
+        dataset_name = f"{dataset_name}_{category}"
+    
+    # Use custom folder name if provided, otherwise use dataset name
+    folder_name = custom_folder_name if custom_folder_name else dataset_name
+    folder_path = create_folder("../datasets/" + folder_name)
     print(f"Created folder: {folder_path}")
     
     try:
@@ -167,6 +180,7 @@ if __name__ == "__main__":
     # Set up argument parser
     parser = argparse.ArgumentParser(description='Download images from a Roboflow dataset URL')
     parser.add_argument('url', nargs='?', help='The Roboflow dataset URL')
+    parser.add_argument('--folder', '-f', help='Custom folder name for saving images (default: dataset name)')
     args = parser.parse_args()
     
     # Get URL from command line argument or prompt if not provided
@@ -174,4 +188,7 @@ if __name__ == "__main__":
     if not url:
         url = input("Enter the Roboflow dataset URL: ")
     
-    download_roboflow_images(url) 
+    # Get custom folder name if provided
+    custom_folder_name = args.folder
+    
+    download_roboflow_images(url, custom_folder_name) 

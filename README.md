@@ -8,8 +8,6 @@ cd tools
 python scrape.py "<url>"
 ```
 
-Then remove all the images of caucasion people.
-
 ### Make and populate database (if it doesn't exist)
 Make a database to store the images with their corresponding classifications
 
