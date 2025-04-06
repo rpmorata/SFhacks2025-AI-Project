@@ -41,7 +41,7 @@ def preprocess_image(image_path):
 def get_class_names():
     # Define all possible classifications from the database schema
     # This matches the ENUM in the database creation script
-    return ['Normal', 'Skin Disease', 'Bruses', 'Acne', 'Monkey Pox', 'Burns']
+    return ['normal', 'acne', 'atopicdermatitis', 'bruise', 'chickenpox', 'eczema', 'firstdegburns', 'herpes', 'hives', 'impetigo', 'melanoma', 'monkeypox', 'pimple', 'psoriasis', 'scabies', 'seconddegburns', 'skincancer', 'thirddegburns', 'vitiligo', 'warts']
 
 def predict_image(model, image_tensor, device):
     with torch.no_grad():

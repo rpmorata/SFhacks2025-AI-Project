@@ -68,8 +68,11 @@ def load_data_from_db():
     images = []
     labels = []
     class_to_idx = {
-        'Normal': 0, 'Skin Disease': 1, 'Bruses': 2,
-        'Acne': 3, 'Monkey Pox': 4, 'Burns': 5
+        'normal': 0, 'acne': 1, 'atopicdermatitis': 2, 'bruise': 3,
+        'chickenpox': 4, 'eczema': 5, 'firstdegburns': 6, 'herpes': 7,
+        'hives': 8, 'impetigo': 9, 'melanoma': 10, 'monkeypox': 11,
+        'pimple': 12, 'psoriasis': 13, 'scabies': 14, 'seconddegburns': 15,
+        'skincancer': 16, 'thirddegburns': 17, 'vitiligo': 18, 'warts': 19
     }
 
     for image_data, classification in rows:
