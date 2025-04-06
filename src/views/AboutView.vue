@@ -39,10 +39,9 @@ import Member from '../components/Member.vue'
                 and advocates dedicated to building AI that truly sees everyone.
             </p>
             <ul class="list">
-                <Member name="Ronin Morata" imgSrc="/src/assets/ronin.jpeg" />
-                <Member name="Samanta Chang" imgSrc="/src/assets/samanta.jpeg" />
-                <Member name="Christopher Lee" imgSrc="/src/assets/christopher.jpg" />
-                <Member name="John Doe" imgSrc="/src/assets/placeholder-pp.jpg" />
+                <Member name="Ronin Morata" imgSrc="/src/assets/ronin.png" />
+                <Member name="Samanta Chang" imgSrc="/src/assets/samanta.png" />
+                <Member name="Christopher Lee" imgSrc="/src/assets/christopher.png" />
             </ul>
         </div>
     </div>

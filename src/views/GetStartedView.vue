@@ -3,7 +3,7 @@ import LargerButton from '../components/LargerButton.vue';
 </script>
 
 <template>
-  <h1>GET STARTED RIGTH NOW!</h1>
+  <h1>GET STARTED RIGHT NOW!</h1>
   <div class="container">
     <router-link to="/upload">
       <LargerButton buttonText="UPLOAD IMAGE" />
