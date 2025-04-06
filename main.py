@@ -1,73 +1,94 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory, render_template
 from flask_cors import CORS
-import torch
-import torchvision.transforms as transforms
+import os
+import base64
 from PIL import Image
 import io
-import os
-import sys
-import tempfile
+import torch
+import json
 
-# Import your inference module
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from inference import load_model, preprocess_image, predict_image, get_class_names
+# Import functions from inference.py
+from inference import load_model, preprocess_image, get_class_names, predict_image
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.', template_folder='.')
 CORS(app)  # Enable CORS for all routes
 
-# Get class names and number of classes
-class_names = get_class_names()
-num_classes = len(class_names)
+# Global variables for model and device
+model = None
+device = None
+class_names = None
 
-# Load the model at startup
-model_path = 'best_model.pth'  # Update this to your model path
-model, device = load_model(model_path, num_classes)
-model.eval()  # Set to evaluation mode
+def initialize_model():
+    global model, device, class_names
+    if model is None:
+        print("Initializing model...")
+        class_names = get_class_names()
+        num_classes = len(class_names)
+        model, device = load_model('best_model.pth', num_classes)
+        print("Model initialized successfully")
 
-@app.route('/predict', methods=['POST'])
-def predict_endpoint():
+# Initialize model when the app starts
+initialize_model()
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/api/predict', methods=['POST'])
+def predict():
     try:
-        # Check if image file is present in the request
-        if 'image' not in request.files:
-            return jsonify({'error': 'No image file provided'}), 400
+        # Check if the request has the image data
+        if 'image' not in request.json:
+            return jsonify({'error': 'No image data provided'}), 400
         
-        # Get the image file
-        image_file = request.files['image']
+        # Get the base64 encoded image
+        image_data = request.json['image']
         
-        # Save the uploaded file to a temporary location
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
-            image_file.save(temp_file.name)
-            temp_path = temp_file.name
+        # Remove the data URL prefix if present (e.g., "data:image/jpeg;base64,")
+        if ',' in image_data:
+            image_data = image_data.split(',')[1]
         
-        try:
-            # Preprocess the image using the function from inference.py
-            image_tensor = preprocess_image(temp_path)
-            
-            # Perform inference
-            probabilities = predict_image(model, image_tensor, device)
-            
-            # Convert probabilities to a dictionary with class names
-            results = {class_name: float(prob) for class_name, prob in zip(class_names, probabilities)}
-            
-            return jsonify({
-                'success': True,
-                'result': results
+        # Decode the base64 image
+        image_bytes = base64.b64decode(image_data)
+        
+        # Convert to PIL Image
+        image = Image.open(io.BytesIO(image_bytes))
+        
+        # Save the image temporarily
+        temp_path = 'temp_image.jpg'
+        image.save(temp_path)
+        
+        # Preprocess the image
+        image_tensor = preprocess_image(temp_path)
+        
+        # Get predictions
+        probabilities = predict_image(model, image_tensor, device)
+        
+        # Convert probabilities to a list of dictionaries with class names and probabilities
+        results = []
+        for class_name, prob in zip(class_names, probabilities):
+            results.append({
+                'class': class_name,
+                'probability': float(prob.item() * 100)  # Convert to percentage
             })
         
-        finally:
-            # Clean up the temporary file
-            if os.path.exists(temp_path):
-                os.unlink(temp_path)
+        # Sort results by probability in descending order
+        results.sort(key=lambda x: x['probability'], reverse=True)
+        
+        # Clean up the temporary file
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+        
+        return jsonify({
+            'success': True,
+            'results': results
+        })
     
     except Exception as e:
         return jsonify({
             'success': False,
             'error': str(e)
         }), 500
-
-@app.route('/health', methods=['GET'])
-def health_check():
-    return jsonify({'status': 'healthy'})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

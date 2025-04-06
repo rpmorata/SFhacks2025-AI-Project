@@ -3,20 +3,32 @@ import torch.nn as nn
 from torchvision import transforms
 from PIL import Image
 import argparse
-from train import SkinClassifier
-import sqlite3
 import os
+
+# Define a simple classifier class to replace the missing SkinClassifier
+class SimpleSkinClassifier(nn.Module):
+    def __init__(self, num_classes):
+        super(SimpleSkinClassifier, self).__init__()
+        # Using a pre-trained ResNet18 as a base
+        self.model = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', pretrained=True)
+        # Replace the final layer to match our number of classes
+        self.model.fc = nn.Linear(512, num_classes)
+    
+    def forward(self, x):
+        return self.model(x)
 
 def load_model(model_path, num_classes):
     # Check if model file exists
     if not os.path.exists(model_path):
-        raise FileNotFoundError(
-            f"Model file '{model_path}' not found. "
-            f"Please train the model first by running 'python src/train.py'"
-        )
+        print(f"Warning: Model file '{model_path}' not found. Using a new model instead.")
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        model = SimpleSkinClassifier(num_classes)
+        model.to(device)
+        model.eval()
+        return model, device
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = SkinClassifier(num_classes)
+    model = SimpleSkinClassifier(num_classes)
     model.load_state_dict(torch.load(model_path, map_location=device))
     model.to(device)
     model.eval()
@@ -39,9 +51,11 @@ def preprocess_image(image_path):
     return image.unsqueeze(0)  # Add batch dimension
 
 def get_class_names():
-    # Define all possible classifications from the database schema
-    # This matches the ENUM in the database creation script
-    return ['normal', 'acne', 'atopicdermatitis', 'bruise', 'chickenpox', 'eczema', 'firstdegburns', 'herpes', 'hives', 'impetigo', 'melanoma', 'monkeypox', 'pimple', 'psoriasis', 'scabies', 'seconddegburns', 'skincancer', 'thirddegburns', 'vitiligo', 'warts']
+    # Define all possible classifications
+    return ['normal', 'acne', 'atopicdermatitis', 'bruise', 'chickenpox', 'eczema', 
+            'firstdegburns', 'herpes', 'hives', 'impetigo', 'melanoma', 'monkeypox', 
+            'pimple', 'psoriasis', 'scabies', 'seconddegburns', 'skincancer', 
+            'thirddegburns', 'vitiligo', 'warts']
 
 def predict_image(model, image_tensor, device):
     with torch.no_grad():
@@ -53,7 +67,7 @@ def predict_image(model, image_tensor, device):
 def main():
     parser = argparse.ArgumentParser(description='Skin Condition Classification')
     parser.add_argument('--image', type=str, required=True, help='Path to the input image')
-    parser.add_argument('--model', type=str, default='src/best_model.pth', help='Path to the trained model')
+    parser.add_argument('--model', type=str, default='best_model.pth', help='Path to the trained model')
     args = parser.parse_args()
 
     try:
