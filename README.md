@@ -1,10 +1,11 @@
 # 📸 Project Title: TopAIcal
 
+<img src="./public/topaical.svg" alt="TopAIcal Logo" width="200" height="200">
+
 ### 👥 Team Members:
 - Ronin Morata
 - Samanta Chang
 - Christopher Lee
-- John Doe
 
 ## 📚 Project Description:
 
@@ -19,3 +20,23 @@ TopAIcal is an AI-powered web application built with Vue.js, designed to be a sm
 - Vue 3
 - JavaScript
 - HTML/CSS
+
+## 🚀 How to Set Up Locally:
+
+1. **Clone the Repository**:
+    ```bash
+    git clone https://github.com/rpmorata/SFhacks2025-AI-Project.git
+    cd SFhacks2025-AI-Project
+    ```
+
+2. **Install Dependencies**:
+    Make sure you have Node.js installed. Then run:
+    ```bash
+    npm install
+    ```
+
+3. **Run the Development Server**:
+    Start the application locally:
+    ```bash
+    npm run dev
+    ```
