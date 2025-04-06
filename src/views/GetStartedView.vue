@@ -41,6 +41,7 @@ function closeModal() {
 </script>
 
 <template>
+  <div style="margin-top: 100px">
   <div>
     <input
       ref="fileInput"
@@ -85,6 +86,7 @@ function closeModal() {
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <style scoped>
