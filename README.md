@@ -1,9 +1,21 @@
-<<<<<<< HEAD
-# Vue 3 + Vite
+# 📸 Project Title: TopAIcal
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+### 👥 Team Members:
+- Ronin Morata
+- Samanta Chang
+- Christopher Lee
+- John Doe
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
-=======
-# SFhacks2025-AI-Project
->>>>>>> ecdb8ca19d33d636c1b1cf4603e45d1a5adc0729
+## 📚 Project Description:
+
+TopAIcal is an AI-powered web application built with Vue.js, designed to be a smart companion for skin health—especially for people of color. It leverages advanced machine learning to detect and interpret common skin concerns, offering personalized insights, support, and resources tailored to a wide range of skin tones. With inclusivity at its core, TopAIcal aims to bridge the gap in dermatological care by making skin health more accessible, accurate, and representative for everyone.
+
+### 🔍 Features:
+- 📷 Camera integration to capture images directly from the browser.
+- 🖼️ File upload with image preview.
+- 🧠 An AI-powered image classification model that analyzes and displays results.
+
+### 🛠️ Technologies Used:
+- Vue 3
+- JavaScript
+- HTML/CSS
