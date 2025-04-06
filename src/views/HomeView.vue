@@ -1,5 +1,17 @@
 <script setup>
 import Button from '../components/Button.vue'
+import { onBeforeMount, onBeforeUnmount } from 'vue';
+
+onBeforeMount(() => {
+  document.body.className = 'home';
+});
+
+onBeforeUnmount(() => {
+  if (document.body.className === 'home') {
+    document.body.className = '';
+  }
+});
+
 </script>
 
 <template>

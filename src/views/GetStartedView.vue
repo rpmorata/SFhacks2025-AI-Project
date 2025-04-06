@@ -6,19 +6,16 @@ import ResultItem from '../components/ResultItem.vue'
 const fileInput = ref(null)
 const imageUrl = ref(null)
 const isModalOpen = ref(false) // State to control modal visibility
-const errorMessage = ref('') // State to store error messages
+const errorMessage = ref('Please upload an image before classifying') // State to store error messages
 
 function handleFileChange(event) {
   const file = event.target.files[0]
   if (file && file.type === 'image/png') {
-    console.log('Valid PNG file selected:', file.name)
     imageUrl.value = URL.createObjectURL(file) // Create a URL for the image
-    errorMessage.value = '' // Clear any previous error
+    document.getElementById('error').className = 'no-show'
   } else {
-    console.error('Please select a valid .png file')
     fileInput.value = null // Clear the input
     imageUrl.value = null // Clear the image preview
-    errorMessage.value = 'Please select a valid .png file' // Set error message
   }
 }
 
@@ -28,7 +25,7 @@ function triggerFileInput() {
 
 function openModal() {
   if (!imageUrl.value) {
-    errorMessage.value = 'Please upload an image before classifying' // Set error message
+    document.getElementById('error').className = 'show'
     return
   }
   isModalOpen.value = true // Open the modal
@@ -38,7 +35,8 @@ function closeModal() {
   isModalOpen.value = false // Close the modal
   imageUrl.value = null // Clear the image preview
   fileInput.value = null // Reset the file input
-  errorMessage.value = '' // Clear any error message
+  document.getElementById('error').className = 'no-show'
+
 }
 </script>
 
@@ -67,7 +65,7 @@ function closeModal() {
       </template>
     </div>
     <Button @click="openModal" style="margin-top:20px" buttonText="CLASSIFY" />
-    <p v-if="errorMessage" style="color: red; margin-top: 10px;">{{ errorMessage }}</p>
+    <p id="error" class="no-show">{{ errorMessage }}</p>
 
     <!-- Modal -->
     <div
@@ -111,5 +109,14 @@ function closeModal() {
 
 .result-list {
   padding: 0px 20px 0px 20px;
+}
+
+.no-show {
+  margin-top: 10px;
+  visibility: hidden
+}
+.show {
+  color: red;
+  margin-top: 10px;
 }
 </style>

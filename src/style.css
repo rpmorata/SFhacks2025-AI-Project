@@ -30,6 +30,12 @@ body {
   min-height: 100vh;
 }
 
+body.home {
+  background-image: url(./assets/background2.png);
+  background-position: center 40%;
+}
+
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
