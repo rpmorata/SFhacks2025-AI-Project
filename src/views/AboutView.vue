@@ -39,9 +39,18 @@ import Member from '../components/Member.vue'
                 and advocates dedicated to building AI that truly sees everyone.
             </p>
             <ul class="list">
-                <Member name="Ronin Morata" imgSrc="/src/assets/ronin.png" />
-                <Member name="Samanta Chang" imgSrc="/src/assets/samanta.png" />
-                <Member name="Christopher Lee" imgSrc="/src/assets/christopher.png" />
+                <li class="list-item">
+                    <strong>Ronin Morata</strong>
+                    <img src="../assets/ronin.png" class="image-pp" />
+                </li>
+                <li class="list-item">
+                    <strong>Samanta Chang</strong>
+                    <img src="../assets/samanta.png" class="image-pp" />
+                </li>
+                <li class="list-item">
+                    <strong>Christopher Lee</strong>
+                    <img src="../assets/christopher.png" class="image-pp" />
+                </li>
             </ul>
         </div>
     </div>
@@ -74,4 +83,17 @@ import Member from '../components/Member.vue'
     margin: 20px 50px 20px 50px;
 }
 
+.list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.image-pp {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Makes the image circular */
+    margin-left: auto;
+    margin-right: auto;
+}
 </style>
