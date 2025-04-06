@@ -1,3 +1,7 @@
+<script setup>
+import Button from './components/Button.vue'
+</script>
+
 <template>
   <header class="header">
     <router-link to="/" class="logo-link">
@@ -7,12 +11,15 @@
     <nav class="nav-links">
       <router-link to="/" class="nav-item">HOME</router-link>
       <router-link to="/about" class="nav-item">ABOUT US</router-link>
-      <router-link to="/get-started" class="nav-item">GET STARTED</router-link>
+      <router-link to="/get-started" >
+        <Button buttonText="GET STARTED" />
+      </router-link>
     </nav>
   </header>
 
   <router-view />
 </template>
+
 <style scoped>
 .header {
   position: fixed;
@@ -62,13 +69,4 @@ h1 {
   color: #b56f12; /* Change color on hover */
 }
 
-.nav-item:last-child {
-  background-color: #805010; /* Different background color for "GET STARTED" */
-  color: white; /* White text for contrast */
-  border-radius: 5px; /* Rounded corners */
-}
-
-.nav-item:last-child:hover {
-  background-color: #b56f12; /* Darker blue on hover */
-}
 </style>

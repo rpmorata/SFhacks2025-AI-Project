@@ -1,3 +1,7 @@
+<script setup>
+import Member from '../components/Member.vue'
+</script>
+
 <template>
     <div style="margin-top: 100px">
     <h1>ABOUT US</h1>
@@ -35,22 +39,10 @@
                 and advocates dedicated to building AI that truly sees everyone.
             </p>
             <ul class="list">
-                <li class="list-item">
-                    <strong>Ronin Morata</strong>
-                    <img src="../assets/ronin.jpeg" class="image-pp" />
-                </li>
-                <li class="list-item">
-                    <strong>Samanta Chang</strong>
-                    <img src="../assets/samanta.jpeg" class="image-pp" />
-                </li>
-                <li class="list-item">
-                    <strong>John Doe 3</strong>
-                    <img src="../assets/placeholder-pp.jpg" class="image-pp" />
-                </li>
-                <li class="list-item">
-                    <strong>John Doe 4</strong>
-                    <img src="../assets/placeholder-pp.jpg" class="image-pp" />
-                </li>
+                <Member name="Ronin Morata" imgSrc="/src/assets/ronin.jpeg" />
+                <Member name="Samanta Chang" imgSrc="/src/assets/samanta.jpeg" />
+                <Member name="Christopher Lee" imgSrc="/src/assets/christopher.jpg" />
+                <Member name="John Doe" imgSrc="/src/assets/placeholder-pp.jpg" />
             </ul>
         </div>
     </div>
@@ -64,13 +56,6 @@
     padding: 0;
     gap: 50px;
     justify-content: center;
-}
-
-.list-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
 }
 
 .section {
@@ -90,11 +75,4 @@
     margin: 20px 50px 20px 50px;
 }
 
-.image-pp {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%; /* Makes the image circular */
-    margin-left: auto;
-    margin-right: auto;
-}
 </style>
